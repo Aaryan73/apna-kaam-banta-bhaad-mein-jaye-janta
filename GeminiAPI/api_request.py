@@ -36,18 +36,18 @@ def get_questions(prompt):
     return questions
 
 def prepare_prompt_for_answercheck(question_answer_pair):
+    with open("GeminiAPI/prompt_check_answer.txt", "r") as file:
+        prompt = file.read()
     qa_string = ""
     for key, value in question_answer_pair.items():
         qa_string += f"\nquestion: {key}\n"
         qa_string += f"answer: {value}\n"
-    return qa_string.strip()
+    prompt.replace("{question_answer_pair}", qa_string.strip())
+    return prompt
 
 
 if __name__=='__main__':
-    prompt = prepare_prompt(resume='Aaryan Regmi \n Python\n machine learning \n Face Recognition project \n aaryanreegmi39@gmail.com', tech_stack='python, machine learning', difficulty=2, question_count=5)
-    print(prompt)
-    questions = get_questions(prompt)
-    print(questions)
+    prompt = prepare_prompt_for_answercheck(question_answer_pair={})
 
 
 

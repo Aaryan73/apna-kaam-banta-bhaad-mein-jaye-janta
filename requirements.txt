@@ -1,5 +1,4 @@
 fastapi==0.110.2
-fitz==0.0.1.dev2
 numpy==1.26.4
 opencv_python==4.9.0.80
 pdfplumber==0.11.0
@@ -7,3 +6,4 @@ protobuf==5.26.1
 python-dotenv==1.0.1
 uvicorn==0.29.0
 PyMuPDF==1.24.2
+PyMuPDFb==1.24.1

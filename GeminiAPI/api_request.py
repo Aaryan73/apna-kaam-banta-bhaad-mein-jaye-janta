@@ -18,6 +18,20 @@ def print_available_model():
         if 'generateContent' in m.supported_generation_methods:
             print(m.name)
 
+def calculate_percentage(result_list, marking):
+    total_points = 0
+    max_points = 0
+
+    for result in result_list:
+        if result in marking:
+            total_points += marking[result]
+            max_points += marking['Completely correct']
+
+    percentage = (total_points / max_points) * 100
+    rounded_percentage = (percentage // 10) * 10
+
+    return rounded_percentage
+
 def prepare_prompt(resume, tech_stack, difficulty, question_count):
     with open("GeminiAPI/prompt_question.txt", "r") as file:
         prompt = file.read()
@@ -42,15 +56,27 @@ def prepare_prompt_for_answercheck(question_answer_pair):
     for key, value in question_answer_pair.items():
         qa_string += f"\nquestion: {key}\n"
         qa_string += f"answer: {value}\n"
-    print(qa_string)
-    prompt.replace("{question_answer_pair}", qa_string.strip())
+    prompt = prompt.replace("{question_answer_pair}", qa_string.strip())
     
     return prompt
+
+def get_evaluation(prompt):
+    response = model.generate_content(prompt)
+    evaluation = [evaluation.strip(' ') for evaluation in response.text.split('QQQ') if evaluation.strip(' ') in ['Incorrect', 'Partially correct', 'Completely correct']]
+    marking = {
+        'Completely correct':10,
+        'Incorrect':0,
+        'Partially correct':5
+    }
+    score = calculate_percentage(evaluation, marking)
+    return score
 
 
 if __name__=='__main__':
     prompt = prepare_prompt_for_answercheck(question_answer_pair={'what are the 3 primary colors?': 'Red Green and Blue', 'What is python?':'Python is a low level programming language.'})
     print(prompt)
+    score = get_evaluation(prompt)
+    print(score)
 
 
 

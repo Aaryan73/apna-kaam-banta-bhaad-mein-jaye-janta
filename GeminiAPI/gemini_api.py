@@ -8,13 +8,13 @@ import cv2
 
 import numpy as np
 
-from fastapi import APIRouter, HTTPException, status, File, UploadFile, Request
+from fastapi import APIRouter, HTTPException, status, File, UploadFile, Request, Body
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 
 from typing import Annotated, Dict
 
-from GeminiAPI.api_request import prepare_prompt, get_questions
+from GeminiAPI.api_request import prepare_prompt, get_questions, prepare_prompt_for_answercheck, get_evaluation
 
 
 router = APIRouter(
@@ -56,11 +56,17 @@ async def gemini_questions(
         "questions": questions
     }
 
-# @router.post("/check-answers", response_description= \
-#              "Checking answers using llm")
-# async def check_answers(request: Request):
-#     # Get the JSON data from the request
-#     json_data = await request.json()
+@router.post("/check-answers", response_description= \
+             "Checking answers using llm")
+async def check_answers(json_data: dict = Body(...)):
+    
+    if not isinstance(json_data, dict):
+        return {"error": "Data must be a dictionary"}
 
-#     for question, answer in json_data.items():
-#         pass
+    prompt = prepare_prompt_for_answercheck(json_data)
+    score = get_evaluation(prompt)
+    return {
+        "score": score
+    }
+
+    

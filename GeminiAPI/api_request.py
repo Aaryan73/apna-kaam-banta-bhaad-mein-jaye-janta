@@ -42,12 +42,15 @@ def prepare_prompt_for_answercheck(question_answer_pair):
     for key, value in question_answer_pair.items():
         qa_string += f"\nquestion: {key}\n"
         qa_string += f"answer: {value}\n"
+    print(qa_string)
     prompt.replace("{question_answer_pair}", qa_string.strip())
+    
     return prompt
 
 
 if __name__=='__main__':
-    prompt = prepare_prompt_for_answercheck(question_answer_pair={})
+    prompt = prepare_prompt_for_answercheck(question_answer_pair={'what are the 3 primary colors?': 'Red Green and Blue', 'What is python?':'Python is a low level programming language.'})
+    print(prompt)
 
 
 

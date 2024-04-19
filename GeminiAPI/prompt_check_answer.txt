@@ -16,19 +16,14 @@ Please respond with your evaluation in the following format:
 
 Evaluation: [Incorrect/Partially correct/Completely correct]
 
+Reply in the following format:
 
-Example input:
-Question: What is the capital city of France?
-Answer: Paris
+QQQ<evalution1>QQQ<evalution2>QQQ<evalution3>QQQ
 
-Example output:
-Evaluation: Completely correct
+Increase the number of QQQ according to the number of evaluations to be generated based on the number of provided question and answer pair.
 
-Example input: 
-Question: What are the three primary colors?
-Answer: Red, blue, and yellow.
-
-Example output:
-Evaluation: Partially correct
+The QQQ should enclose the evaluation requested.
 
 Let's begin! I will provide you with questions and answers, and you should evaluate the correctness of each answer.
+
+{question_answer_pair}

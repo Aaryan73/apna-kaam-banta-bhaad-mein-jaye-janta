@@ -35,6 +35,8 @@ def get_questions(prompt):
     questions = [question for question in questions if '\n' not in question]
     return questions
 
+def prepare_prompt_for_answercheck(question_answer_pair):
+    
 
 
 if __name__=='__main__':

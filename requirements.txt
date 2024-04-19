@@ -5,3 +5,4 @@ opencv_python==4.9.0.80
 pdfplumber==0.11.0
 protobuf==5.26.1
 python-dotenv==1.0.1
+uvicorn==0.29.0

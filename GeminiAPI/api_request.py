@@ -36,7 +36,11 @@ def get_questions(prompt):
     return questions
 
 def prepare_prompt_for_answercheck(question_answer_pair):
-    
+    qa_string = ""
+    for key, value in question_answer_pair.items():
+        qa_string += f"\nquestion: {key}\n"
+        qa_string += f"answer: {value}\n"
+    return qa_string.strip()
 
 
 if __name__=='__main__':
